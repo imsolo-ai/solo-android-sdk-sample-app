@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply from: "${rootDir}/dependencies.gradle"
+
+android {
+    compileSdkVersion general.compileSdk
+    buildToolsVersion "33.0.0"
+
+    defaultConfig {
+        applicationId general.applicationId
+        minSdkVersion general.minSdk
+        targetSdkVersion general.targetSdk
+        versionCode general.versionCode
+        versionName general.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        def soloPropertiesFile = rootProject.file("solo.properties")
+        def soloProperties = new Properties()
+        soloProperties.load(new FileInputStream(soloPropertiesFile))
+
+        def API_KEY = "API_KEY"
+        def APP_ID = "APP_ID"
+
+        def API_KEY_VALUE = "\"${soloProperties[API_KEY]}\""
+        def APP_ID_VALUE = "\"${soloProperties[APP_ID]}\""
+
+        all {
+            buildConfigField "String", API_KEY, API_KEY_VALUE
+            buildConfigField "String", APP_ID, APP_ID_VALUE
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation "imsolo:sdk:1.0.8"
+
+    implementation kotlin
+    implementation coreKtx
+    implementation appCompat
+    implementation material
+    implementation constraintLayout
+    implementation liveData
+    implementation viewModel
+    implementation gson
+
+    testImplementation junit
+    androidTestImplementation androidTestJunit
+    androidTestImplementation espresso
+}

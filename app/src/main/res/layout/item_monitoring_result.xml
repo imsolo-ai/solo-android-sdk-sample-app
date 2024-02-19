@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_emotion.xml -->
+<androidx.cardview.widget.CardView
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvFace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Face: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNeutral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neutral: " />
+
+        <TextView
+            android:id="@+id/tvHappy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Happy: " />
+
+        <TextView
+            android:id="@+id/tvSad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sad: " />
+
+        <TextView
+            android:id="@+id/tvAngry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Angry: " />
+
+        <TextView
+            android:id="@+id/tvFearful"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fearful: " />
+
+        <TextView
+            android:id="@+id/tvDisgusted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disgusted: " />
+
+        <TextView
+            android:id="@+id/tvSurprised"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Surprised: " />
+
+        <TextView
+            android:id="@+id/tvMood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mood: " />
+
+        <TextView
+            android:id="@+id/tvEnergy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Energy: " />
+
+        <TextView
+            android:id="@+id/tvStress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stress: " />
+
+        <TextView
+            android:id="@+id/tvWellbeing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wellbeing: " />
+
+        <TextView
+            android:id="@+id/tvInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Interest: " />
+
+        <TextView
+            android:id="@+id/tvEngagement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Engagement: " />
+
+        <TextView
+            android:id="@+id/tvPlayedSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="timeStamp: " />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
