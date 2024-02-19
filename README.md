@@ -13,11 +13,6 @@ repositories {
     ...
     maven {
         url 'https://imsolo.jfrog.io/artifactory/android/'
-        // Use credentials if anonymous access disabled
-        credentials {
-            username "username"
-            password "password"
-        }
     }
 }
 ```
@@ -26,7 +21,7 @@ Add dependency to your project level `gradle.build` file
 
 ```gradle
 dependencies {
-    implementation "imsolo:sdk:1.0.0"
+    implementation "imsolo:sdk:1.0.8"
 }
 ```
 
@@ -165,10 +160,10 @@ Callback methods:
 
 ```kotlin
 EventResultListener {
-    fun onCheckupStarted()  //optional
-    fun onCheckupEnded()    //optional
-    fun onCheckupResult(result: EmotionalCheckupResult)
-    fun onCheckupError(exception: SoloException)
+    fun onMonitoringStarted()  //optional
+    fun onMonitoringEnded()    //optional
+    fun onMonitoringResult(result: EmotionalCheckupResult)
+    fun onMonitoringError(exception: SoloException)
 }
 ```
 
