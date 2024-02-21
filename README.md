@@ -29,22 +29,6 @@ dependencies {
 }
 ```
 
-## Publish library
-
-To publish library, create file `artifactory.properties` in root of project.
-```text
-artifactory_keyRepo=<KEY_REPO>
-artifactory_user=<USER_LOGIN>
-artifactory_password=<TOKEN>
-artifactory_contextUrl=https://imsolo.jfrog.io/artifactory
-```
-Then `Clean project` and run `artifactoryPublish` task manually or from file `artifactory.gradle` via Android Studio.
-Token can be generated from jFrog `Set Me Up` button or manually. And for send on JFrog you need use command  ./gradlew artifactoryPublish
-
-artifactory_keyRepo="/android/" it's a path for artifacts currently it looks like
-artifactory_user - it's your email from jfrog
-artifactory_password - generated from jFrog `Set Me Up` button
-
 ## Example
 
 To run the example project, clone the repo.
