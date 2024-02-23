@@ -25,7 +25,7 @@ Add dependency to your project level `gradle.build` file
 
 ```gradle
 dependencies {
-    implementation "imsolo:sdk:1.0.8"
+    implementation "imsolo:sdk:1.0.9"
 }
 ```
 
@@ -113,6 +113,7 @@ In Activity:
 ```kotlin
 supportFragmentManager.beginTransaction()
     .replace(R.id.solo_container, soloFragment)
+    .runOnCommit { soloFragment.startMonitoring() }
     .commit()
 ```
 
@@ -120,6 +121,7 @@ In Fragment:
 ```kotlin
 childFragmentManager.beginTransaction()
     .replace(R.id.solo_container, soloFragment)
+    .runOnCommit { soloFragment.startMonitoring() }
     .commit()
 ```
 #### Note
