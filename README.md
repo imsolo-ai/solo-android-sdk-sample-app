@@ -25,7 +25,7 @@ Add dependency to your project level `gradle.build` file
 
 ```gradle
 dependencies {
-    implementation "imsolo:sdk:1.0.9"
+    implementation "imsolo:sdk:1.1.0"
 }
 ```
 
