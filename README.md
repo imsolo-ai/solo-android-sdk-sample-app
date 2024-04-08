@@ -6,223 +6,83 @@ This Android Sample App showcases the seamless integration of our cutting-edge E
 With SOLO SDK, developers can effortlessly implement advanced emotion recognition, facial micro-expression analysis, and sentiment analysis features into their Android apps.
 For more details: www.imsolo.ai 
 
-## Get library
+# Solo SDK Integration Guide
 
-Add repository to your root level `gradle.build` file
+This guide outlines the steps required to integrate the Solo SDK into your Android application using Kotlin DSL. Follow the steps below to ensure a successful integration.
 
-```gradle
-repositories {
-    google()
-    mavenCentral()
-    ...
-    maven {
-        url 'https://imsolo.jfrog.io/artifactory/android/'
-    }
+## Installation
+
+### 1. Configure Your Project Repositories
+
+Edit your project's `settings.gradle.kts` file to include the Solo SDK repository as shown below:
+
+```kotlin
+dependencyResolutionManagement {
+   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+   repositories {
+       google()
+       mavenCentral()
+       maven {
+           url = uri("https://imsolo.jfrog.io/artifactory/android/")
+       }
+   }
 }
 ```
 
-Add dependency to your project level `gradle.build` file
+### 2. Add the SDK Dependency
 
-```gradle
+In your application module (commonly `app`), update the `build.gradle.kts` file to add the Solo SDK as a dependency:
+
+```kotlin
 dependencies {
-    implementation "imsolo:sdk:1.1.0"
+    implementation("imsolo:sdk:1.0.9")
 }
 ```
 
-## Example
+## Configure API Key and App ID
 
-To run the example project, clone the repo.
+Add your API Key and App ID to your `gradle.properties` file:
 
-Create file `solo.properties` in root of project.
-Put your `APP_ID` and `APP_KEY` variables without quotes.
-
-```text
-API_KEY=<YOUR_API_KEY>
-APP_ID=<YOUR_APP_ID>
+```
+API_KEY="YOUR_API_KEY"
+APP_ID="YOUR_APP_ID"
 ```
 
-Then sync Gradle (from Android Studio or manually).
-
-## Library Documentation
-
-### Initialization
-
-To be able to work with face expression estimating you should
-initialize `Solo` object.
-This method require network connection and can throw exceptions.
-Configure your session with `Solo` object
-(userId is a required parameter!).
+Then, in your app module's `build.gradle.kts` file, inside the `defaultConfig` block, add:
 
 ```kotlin
-Solo.init(credentials: SoloCredentials)
-Solo.setFragmentListener(
-    fragmentManager: FragmentManager,
-    lifecycleOwner: LifecycleOwner,
-    listener: EventResultListener
-)
-```
-
-#### Exceptions:
-All exceptions is inherited from `SoloException`
-```kotlin
-NotValidCredentials
-NotAuthorizedException
-NetworkOnMainThreadException
-NetworkConnectionException
-```
-
-#### Methods:
-```kotlin
-fun setIdentify(identify: Identify)
-fun setContent(contentId: String?)
-fun setMetadata(metadata: Map<String, String>)
-fun removeMetadata(key: String)
-fun removeMetadata(keys: Set<String>)
-fun reset() //revert to default configuration
-fun getFragmentInstance(): Fragment
-```
-
-#### Example of initialization in ViewModel:
-
-```kotlin
-runCatching {
-    Solo.init(SoloCredentials(BuildConfig.API_KEY, BuildConfig.APP_ID))
-}.onSuccess {
-    it.setIdentify(Identify(USER_ID))
-    _soloLiveData.postValue(Resource.Success(it))
-}.onFailure {
-    _soloLiveData.postValue(Resource.Error(it))
-    it.printStackTrace()
+defaultConfig {
+    buildConfigField("String", "API_KEY", project.properties["API_KEY"].toString())
+    buildConfigField("String", "APP_ID", project.properties["APP_ID"].toString())
 }
 ```
 
-### Estimation flow
+## Initialize the Fragment
 
-#### Fragment initialization
-
-Estimation flow works in a fragment. Create fragment instance
-with initialized `Solo` object.
+### In an Activity
 
 ```kotlin
-val soloFragment = solo.getFragmentInstance()
-```
-
-Then you will be able to put this `soloFragment` in a container with `FragmentManager`.
-
-In Activity:
-```kotlin
+val soloFragment = solo.getMonitoringFragmentInstance()
 supportFragmentManager.beginTransaction()
-    .replace(R.id.solo_container, soloFragment)
-    .runOnCommit { soloFragment.startMonitoring() }
-    .commit()
+   .replace(R.id.container, soloFragment)
+   .commitNow()
 ```
 
-In Fragment:
+### In a Fragment
+
 ```kotlin
+val soloFragment = solo.getMonitoringFragmentInstance()
 childFragmentManager.beginTransaction()
-    .replace(R.id.solo_container, soloFragment)
-    .runOnCommit { soloFragment.startMonitoring() }
-    .commit()
-```
-#### Note
-Before you place `soloFragment` in container,
-request `Manifest.permission.CAMERA` permission with
-convenient for you way.
-
-#### Callback initialization
-To get callbacks and results from this fragment
-you should initialize a listener with `Solo` class
-in `onCreate` method of your `Activity` or `Fragment`.
-`FragmentManager` must be the same as when `soloFragment`
-placed in a container.
-
-#### Checkup callback
-
-```kotlin
-Solo.setFragmentListener(
-    fragmentManager: FragmentManager,
-    lifecycleOwner: LifecycleOwner,
-    listener: EventResultListener
-)
+   .replace(R.id.solo_container, soloFragment)
+   .commitNow()
 ```
 
-Callback methods:
-
-```kotlin
-EventResultListener {
-    fun onMonitoringStarted()  //optional
-    fun onMonitoringEnded()    //optional
-    fun onMonitoringResult(result: EmotionalCheckupResult)
-    fun onMonitoringError(exception: SoloException)
-}
-```
-
-#### Monitoring callback
-```kotlin
-Solo.setMonitoringListener(
-    fragmentManager: FragmentManager,
-    lifecycleOwner: LifecycleOwner,
-    listenerBox: (List<Box>) -> Unit, //returns the coordinates of faces
-    listener: (EmotionalCheckupResult) -> Unit //returns the processing result from the server
-)
+## Set Up Callbacks
 
 ```kotlin
 Solo.setMonitoringListener(
-    fragmentManager: FragmentManager,
-    lifecycleOwner: LifecycleOwner,
-    monitoringListener: (MonitoringTracker) -> Unit //returns the emotion result for each image frame
+   fragmentManager: FragmentManager,
+   lifecycleOwner: LifecycleOwner,
+   monitoringListener: (MonitoringTracker) -> Unit
 )
-```
-
-### Models
-
-#### SoloCredentials
-```kotlin
-data class SoloCredentials(
-    val apiKey: String,
-    val appId: String
-)
-```
-
-#### Identify
-```kotlin
-data class Identify(
-    val userId: String,
-    val groupId: String? = null,
-    val sessionId: String? = null
-)
-```
-
-#### EmotionalCheckupResult
-```kotlin
-data class EmotionalCheckupResult(
-    val avg: AvgEmotion,
-    val valence: Float,
-    val energy: Float,
-    val wellbeing: Float,
-    val stress: Float,
-    val interest: Float,
-    val engagement: Float,
-    val soloSessionId: Long,
-    val sessionUnitId: Int?,
-)
-```
-
-#### AvgEmotion
-```kotlin
-data class AvgEmotion(
-    val happiness: Float,
-    val neutral: Float,
-    val angry: Float,
-    val disgusted: Float,
-    val surprised: Float,
-    val sad: Float,
-    val fearful: Float,
-)
-```
-
-#### Record video
-```kotlin
-fun startRecording() //use for start recording video
-fun stopRecording(callBack:(Uri)->Unit) // use for stop recording and get path
 ```
