@@ -4,7 +4,8 @@ Empower Your Android App with Emotional AI: Introducing SOLO AI - Android Sample
 Discover the transformative potential of Emotional AI in your Android app with our SOLO Android Sample App.
 This Android Sample App showcases the seamless integration of our cutting-edge Emotional AI technology into your mobile applications, unlocking new dimensions of user engagement, personalization, and insight.
 With SOLO SDK, developers can effortlessly implement advanced emotion recognition, facial micro-expression analysis, and sentiment analysis features into their Android apps.
-For more details: docs.imsolo.ai 
+For more details, visit [docs.imsolo.ai](https://docs.imsolo.ai).
+
 
 # Solo SDK Integration Guide
 
