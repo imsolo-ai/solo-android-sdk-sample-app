@@ -35,7 +35,7 @@ In your application module (commonly `app`), update the `build.gradle.kts` file 
 
 ```kotlin
 dependencies {
-    implementation("imsolo:sdk:1.0.9")
+    implementation("imsolo:sdk:1.1.0")
 }
 ```
 
