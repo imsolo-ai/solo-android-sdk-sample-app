@@ -88,8 +88,7 @@ Solo.setMonitoringListener(
 ```
 ## Understanding MonitoringTracker and Related Data Classes
 
-The SDK provides comprehensive emotional and facial analysis through the `MonitoringTracker` data class and related entities. Understanding these classes is crucial for effectively leveraging the SDK's capabilities.
-
+The SDK provides comprehensive emotional and facial analysis through the `MonitoringTracker` data class and related entities.
 ```kotlin
 // MonitoringTracker Class
 data class MonitoringTracker(
